@@ -4,33 +4,33 @@ var lowChar = "abcdefghijklmnopqrstuvwxyz";
 var upChar = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 var numChar = "0123456789";
 var specialChar="!@#$%^&*()_+=-";
-var length;
-var checkUpChar;
-var checkNumChar;
-var checkSpecialChar;
+var passwordLength;
+
 
 //determines lenght of password
 function defineLength(){
-  var length = prompt("Choose a length between 8-128 characters for your password.")
+  var passwordLength = prompt("Choose a length between 8-128 characters for your password.");
 
-  if(length < 8) {
+  if(passwordLength < 8) {
     alert("Please choose a length between 8-128 characters.");
     defineLength();
-  } else if (length>128) {
+  } else if (passwordLength>128) {
     alert("Please choose a length between 8-128 characters.");
     defineLength();
-  } else if (isNaN(length)) {
+  } else if (isNaN(passwordLength)) {
     alert("Please choose a length between 8-128 characters.");
     defineLength();
-  }else {
+  } else {
     alert("Now you will be asked if you need uppercase letters, numbers, or any special characters. If you select no on all, you will be given a password with only lowercase letters.")
-    return length;
   }
-  return length;
+  debugger
+  return passwordLength;
 }
+
 
 //determines if uppercase is needed
 function determineUpChar() {
+  debugger
   var checkUpChar = prompt("Do you need Uppercase letters? Respond 'Yes' or 'No'");
     checkUpChar=checkUpChar.toLowerCase();
   
@@ -98,22 +98,57 @@ function determineSpecialChar() {
   return checkSpecialChar;
 }
 
-//record entries
-defineLength();
-console.log(length);
-determineUpChar();
-console.log(checkUpChar);
-determineNumChar();
-console.log(checkNumChar);
-determineSpecialChar();
-console.log(checkSpecialChar);
+//record entries and create the password in the console
+function generatePassword () {
+  defineLength();
+  console.log(length);
+  determineUpChar();
+  console.log(checkUpChar);
+  determineNumChar();
+  console.log(checkNumChar);
+  determineSpecialChar();
+  console.log(checkSpecialChar);
+  debugger
+
+  //define characters and password variables
+  var characters = lowChar;
+  var password = "";
+
+  //decide what characters are needed in the password
+  if (checkUpChar === true && checkNumChar === true && checkSpecialChar === true){
+    characters += upChar + numChar + specialChar;
+  } else if (checkUpChar && checkNumChar){
+    characters += upChar + numChar;
+  } else if (checkUpChar && checkSpecialChar){
+    characters += upChar + specialChar;
+  } else if (checkNumChar && checkSpecialChar){
+    characters += numChar + specialChar;
+  } else if (checkNumChar){
+    characters += numChar;
+  } else if (checkUpChar){
+    characters += upChar;
+  } else if (checkSpecialChar){
+    characters += specialChar;
+  } else {
+    characters === characters;
+  }
+
+  //random number generator to pick characters
+  for(var i=0; i < characters.length; i++ ){
+    password += characters.charAt(Math.floor(Math.random()*characters.length));
+  }
+  return password;
+}
 
 
 // Write password to the #password input
 function writePassword() {
+  //places written text in the correct field
   var passwordText = document.querySelector("#password");
+  passwordText.value = password1;
 
-  passwordText.value = password;
+  //determins password to send to #password
+  var password1 = generatePassword();
 }
 
 
