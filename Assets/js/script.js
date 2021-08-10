@@ -136,21 +136,23 @@ function generatePassword () {
   for(var i=0; i < passwordLength; i++ ){
     password += characters.charAt(Math.floor(Math.random()*characters.length));
   }
-  debugger
-  return password;
+
+  //puts password in password text
+  var passwordText = document.querySelector("#password");
+  passwordText.value = password;
 }
 
 
 // Write password to the #password input
-function writePassword() {
-  //places written text in the correct field
-  var passwordText = document.querySelector("#password");
-  passwordText.value = password1;
+// function writePassword() {
+//   //places written text in the correct field
+//   var passwordText = document.querySelector("#password");
+//   passwordText.value = password;
 
-  //determins password to send to #password
-  var password1 = generatePassword();
-}
+  // //determins password to send to #password
+  // var password = generatePassword();
+// }
 
 
 // Add event listener to generate button
-generateBtn.addEventListener("click", writePassword);
+generateBtn.addEventListener("click", generatePassword);
